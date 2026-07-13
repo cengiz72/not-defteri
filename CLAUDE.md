@@ -1,25 +1,16 @@
-# CLAUDE.md
-
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+# CLAUDE.md (güncellenmiş proje kuralları)
 
 ## Stack
-- Python 3.12+
-- FastAPI
-- SQLite (veritabanı)
+- Frontend: React + TypeScript (`src/web`)
+- Backend: Python 3.12+, FastAPI (`src/api`)
+- Database: SQLite
 
-## Build & Test
-- Kurulum: `pip install -r requirements.txt`
-- Çalıştır: `uvicorn main:app`
-- Test: `pytest --cov`
+## Klasör Yapısı
+- `src/web/` — frontend kodu, component başına dosya
+- `src/api/` — backend kodu, route/model/schema ayrımı
+- `docs/` — PRD, ARCHITECTURE, feature spec'leri
+- `tests/` — src/ ile birebir eşlenen test yapısı
 
-## Naming Convention
-- Değişken ve fonksiyon isimleri: snake_case
-
-## Error Handling
-- Bare `except:` kullanma; her zaman spesifik exception yakala
-- Dosya I/O işlemlerinde context manager (`with`) kullan
-
-## Diğer Kurallar
-- Her fonksiyona type hints ekle
-- Her public fonksiyona docstring yaz
-- Commit mesajları Conventional Commits formatında
+## Kurallar
+- Type hints (Python) ve TypeScript tipleri zorunlu
+- Her yeni feature için `docs/specs/00N-*.md` yaz
