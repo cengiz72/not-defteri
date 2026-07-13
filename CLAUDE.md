@@ -1,19 +1,25 @@
-# CLI Not Defteri — Proje Kuralları
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## Stack
 - Python 3.12+
+- FastAPI
 - SQLite (veritabanı)
-- click (CLI framework) — henüz eklenmemişse argparse kullan
 
 ## Build & Test
 - Kurulum: `pip install -r requirements.txt`
-- Çalıştır: `python main.py`
-- Test: `pytest tests/`
+- Çalıştır: `uvicorn main:app`
+- Test: `pytest --cov`
 
-## Kurallar
+## Naming Convention
+- Değişken ve fonksiyon isimleri: snake_case
+
+## Error Handling
+- Bare `except:` kullanma; her zaman spesifik exception yakala
+- Dosya I/O işlemlerinde context manager (`with`) kullan
+
+## Diğer Kurallar
 - Her fonksiyona type hints ekle
 - Her public fonksiyona docstring yaz
-- Error handling zorunlu: bare `except:` kullanma, spesifik exception yakala
-- Dosya I/O işlemlerinde context manager (`with`) kullan
-- Değişken/fonksiyon isimleri snake_case
 - Commit mesajları Conventional Commits formatında
