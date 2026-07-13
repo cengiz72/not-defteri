@@ -73,7 +73,7 @@ PRD §4'ten birebir aktarılmıştır; bu doküman ek bir şema kararı almaz.
 | title | TEXT | NOT NULL, 1–200 karakter |
 | description | TEXT | NULL, 0–2000 karakter |
 | due_date | TIMESTAMP (UTC) | NULL |
-| priority | TEXT (enum: `low`/`medium`/`high`) | NOT NULL, default `medium` |
+| priority | TEXT (enum: `low`/`medium`/`high`/`highest`) | NOT NULL, default `medium` |
 | is_completed | BOOLEAN | NOT NULL, default `false` |
 | deleted_at | TIMESTAMP (UTC) | NULL (soft delete işareti) |
 | created_at | TIMESTAMP (UTC) | NOT NULL |

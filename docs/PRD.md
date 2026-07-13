@@ -58,7 +58,7 @@ Kullanıcıların hesap oluşturup giriş yaparak kendi görev listelerini yöne
 | title | str, 1–200 karakter | zorunlu, boş olamaz |
 | description | str, 0–2000 karakter | opsiyonel |
 | due_date | datetime (UTC) | opsiyonel, tarih+saat |
-| priority | enum: `low` / `medium` / `high` | default `medium` |
+| priority | enum: `low` / `medium` / `high` / `highest` | default `medium` |
 | is_completed | bool | default `false` |
 | deleted_at | datetime (UTC), nullable | soft delete işareti |
 | created_at | datetime (UTC) | |
@@ -81,7 +81,7 @@ Index'ler: `user_id`, `(user_id, deleted_at)`, `(user_id, due_date)`.
 ### Tasks
 | Method | Path | Açıklama |
 |---|---|---|
-| GET | `/api/tasks` | Filtre + sayfalama: `?status=active\|completed\|all&priority=low,medium,high&due_after=&due_before=&sort=due_date\|priority\|created_at&order=asc\|desc&page=1&limit=20` |
+| GET | `/api/tasks` | Filtre + sayfalama: `?status=active\|completed\|all&priority=low,medium,high,highest&due_after=&due_before=&sort=due_date\|priority\|created_at&order=asc\|desc&page=1&limit=20` |
 | POST | `/api/tasks` | Yeni görev oluştur |
 | GET | `/api/tasks/{id}` | Tek görev |
 | PATCH | `/api/tasks/{id}` | Kısmi güncelleme (title, description, due_date, priority, is_completed) |
@@ -90,7 +90,7 @@ Index'ler: `user_id`, `(user_id, deleted_at)`, `(user_id, due_date)`.
 
 Soft-delete edilmiş görevler hiçbir `GET` sorgusunda dönmez. Kalıcı temizlik (hard delete/retention job) MVP kapsamı dışı.
 
-**Varsayılan sıralama** (kullanıcı sort seçmezse): tamamlanmamış görevler önce, sonra `due_date` artan (null'lar sonda), sonra `priority` azalan (`high`→`low`), sonra `created_at` azalan.
+**Varsayılan sıralama** (kullanıcı sort seçmezse): tamamlanmamış görevler önce, sonra `due_date` artan (null'lar sonda), sonra `priority` azalan (`highest`→`high`→`medium`→`low`), sonra `created_at` azalan.
 
 **Sayfalama:** offset/limit tabanlı (`page`, `limit`), response'ta `total` alanı döner. Default `limit=20`.
 
@@ -116,7 +116,7 @@ Tüm hatalar tek tip bir zarfla döner (FastAPI'nin `HTTPException` ve `RequestV
 - Üstte durum sekmeleri: Tümü / Aktif / Tamamlanan
 - Filtre çubuğu: öncelik (çoklu seçim), tarih aralığı
 - Sort dropdown: son tarih / öncelik / oluşturma tarihi
-- Her satır: tamamlama checkbox'ı, başlık, öncelik rengi (kırmızı=high, sarı=medium, yeşil=low), son tarih (**geçmiş tarihliyse kırmızı vurgulanır**), düzenle/sil aksiyonları
+- Her satır: tamamlama checkbox'ı, başlık, öncelik rengi (mor=highest, kırmızı=high, sarı=medium, yeşil=low), son tarih (**geçmiş tarihliyse kırmızı vurgulanır**), düzenle/sil aksiyonları
 - **Tasarım kararı:** Görev düzenleme bir modal/panel üzerinden yapılır (inline değil) — çünkü açıklama + son tarih + öncelik gibi çok alanlı bir form inline'da kalabalıklaşır. Bu, gözden geçirilmesi gereken bir karardır.
 - Silme: soft delete anında gerçekleşir, ekranda 5 saniyelik "Görev silindi [Geri Al]" snackbar'ı gösterilir; geri al'a basılırsa `restore` endpoint'i çağrılır.
 - Tüm ekleme/güncelleme/silme işlemleri **optimistic**: UI hemen güncellenir, API çağrısı arka planda yapılır, hata durumunda değişiklik geri alınır ve kullanıcıya bildirim gösterilir.
