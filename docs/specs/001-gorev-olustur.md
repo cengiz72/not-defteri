@@ -18,7 +18,7 @@ Authorization: Bearer <jwt>   (zorunlu)
   "title": "string",
   "description": "string | null",
   "due_date": "string (ISO 8601, UTC) | null",
-  "priority": "low | medium | high | null"
+  "priority": "low | medium | high | highest | null"
 }
 ```
 `title` dışındaki tüm alanlar opsiyoneldir. `priority` verilmezse `medium` varsayılır.
@@ -31,7 +31,7 @@ Authorization: Bearer <jwt>   (zorunlu)
   "title": "string",
   "description": "string | null",
   "due_date": "string (ISO 8601, UTC) | null",
-  "priority": "low | medium | high",
+  "priority": "low | medium | high | highest",
   "is_completed": false,
   "created_at": "string (ISO 8601, UTC)",
   "updated_at": "string (ISO 8601, UTC)"
@@ -48,7 +48,7 @@ Authorization: Bearer <jwt>   (zorunlu)
 - `title`: zorunlu, boş veya sadece boşluktan oluşamaz, 1–200 karakter
 - `description`: opsiyonel, 0–2000 karakter
 - `due_date`: opsiyonel, geçerli ISO 8601 UTC datetime olmalı; geçmiş bir tarih **engellenmez** (PRD §8 — kullanıcı geçmişe dönük bir işi loglayabilir)
-- `priority`: opsiyonel, yalnızca `low` / `medium` / `high`; başka bir değer geçersiz
+- `priority`: opsiyonel, yalnızca `low` / `medium` / `high` / `highest`; başka bir değer geçersiz
 - `Authorization` header zorunlu ve geçerli bir JWT içermeli
 
 ## Error Cases
